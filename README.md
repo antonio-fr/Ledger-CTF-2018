@@ -1,6 +1,6 @@
 # Ledger Capture The Flag 2018
 
-[Ledger](https://www.ledger.fr/ctf2018/){:target="_blank"} organized a security & cryptography-related security challenge, from March 20<sup>th</sup> 2018. Capture The Flag (CTF) qualification is made of 3 different tests.
+[Ledger](https://www.ledger.fr/ctf2018/) organized a security & cryptography-related security challenge, from March 20<sup>th</sup> 2018. Capture The Flag (CTF) qualification is made of 3 different tests.
 
 Now the challenge is over, I share, with Ledger permission, how I have found the solutions along with the Python code I used.
 
@@ -103,7 +103,7 @@ Then signing the following message (*m*) with *d<sub>Bob</sub>* and *k* = 152154
 ```
 Amount:1000000 From:1Kx74VzYPdnJ9xxYQRAap4oNsqaAdUdNCA To:14pHuKrkRhLKsW6zxHKQ64DFGyKQffj7GW
 ```
-
+  
 <img src="https://latex.codecogs.com/svg.latex?H(m)=\rm{SHA256}(\rm{SHA256}(m))" />  
 <img src="https://latex.codecogs.com/svg.latex?H(m)_{(b10)}=\textnormal{99418066424312055700057700639792607513261906432102262516632065974921000930487}" />  
 <img src="https://latex.codecogs.com/svg.latex?H(m)_{(b16)}=\textnormal{dbcca1aab480b507200cf72414b6f01c6dda6ed701bcf6b75f53502881b84cb7}" />
