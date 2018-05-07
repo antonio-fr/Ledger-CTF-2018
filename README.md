@@ -82,7 +82,7 @@ Also if an attacker can draw a relation between 2 *k* used, the most obvious and
 
 That's what happened with the Sony PS3 for example. Sony engineers used the same *k* every time to sign code. In 2010, some [hackers extracted a private key](https://youtu.be/Eag0VyRTld8?t=500) from the PS3 platform. The [RFC6979 standard](https://tools.ietf.org/html/rfc6979) was designed some years ago to overcome these issues. It recommends to sign with a deterministic *k* computed from the private key and the message. This standard is mostly used today, as there is no more need to have a random source to sign and this protects from *k* reuse.
 
-Finally, I seek for identical *k*. This was the right path, as 2 signatures have identical *k*.
+Finally, I sought for identical *k*. This was the right path, as 2 signatures have identical *k*.
 A signature is *(r,s)* and <img src="https://latex.codecogs.com/svg.latex?r=(k.G)_x" /> . So 2 identical *k* lead to 2 identical *r*. The 2 signatures which have the same *k*, have an identical starting in base64. Having the 2 signatures with the same *r*, I computed *k*, then *d<sub>Bob</sub>*.
 
 I used [my old 4 years old bitcoin and ECDSA library](https://github.com/antonio-fr/Fast_Sign_Verify), with some added code to get key recovery. The CTF3 file provided does all the work (takes ~0.5s on a standard PC) :
