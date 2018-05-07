@@ -37,7 +37,7 @@ We are now seeking for the number of solutions of :
 <img src="https://latex.codecogs.com/svg.latex?\iff%20x^{e-1}\equiv%201\pmod{n}" />
 
 We need to find out the number of modular *e-1<sup> th</sup>* roots of unity.  
-if *n* is prime, the number of solutions *(x)* :
+if *n* is prime, the number of solutions *(x)* :  
 <img src="https://latex.codecogs.com/svg.latex?|\%20x:x^{e-1}\equiv%201\pmod{n}\%20|=\langle%20e-1\rangle\subset\mathbb{Z}_n=gcd(e-1,n-1)" />
 
 
