@@ -1,6 +1,6 @@
 # Ledger Capture The Flag 2018
 
-[Ledger](https://www.ledger.fr/ctf2018/) organized a security & cryptography-related security challenge, from March 20<sup>th</sup> 2018. Capture The Flag (CTF) qualification is made of 3 different tests.
+[Ledger](https://www.ledger.fr/ctf2018/){:target="_blank"} organized a security & cryptography-related security challenge, from March 20<sup>th</sup> 2018. Capture The Flag (CTF) qualification is made of 3 different tests.
 
 Now the challenge is over, I share, with Ledger permission, how I have found the solutions along with the Python code I used.
 
@@ -9,11 +9,10 @@ Now the challenge is over, I share, with Ledger permission, how I have found the
 
 The challenge is purely **theoretical**. This is a deep dive in **modular arithmetic**, which is heavily used in RSA cryptography. In the RSA crypto-system, the encryption function is <img src="https://latex.codecogs.com/svg.latex?E(x)=x^e\bmod{n}" /> . The challenge is to list all *e* which the number of *x* such as <img src="https://latex.codecogs.com/svg.latex?x=x^e\equivx\pmod{n}" /> is at minimum. Then compute the product of all these values of *e* (modulo 1337694213377816) .
 
-The numbers given are :
-
-p = nextprime(1337) and q = nextprime(6982)
-So we have : p = 1361 and q = 6983
-n = p * q = 9503863
+The numbers given are :  
+p = nextprime(1337) and q = nextprime(6982)  
+So we have : p = 1361 and q = 6983  
+n = p * q = 9503863  
 <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)=9495520" />
 
 
@@ -37,7 +36,7 @@ We are now seeking for the number of solutions of :
 
 <img src="https://latex.codecogs.com/svg.latex?\iff%20x^{e-1}\equiv%201\pmod{n}" />
 
-We need to find out the number of modular *e-1<sup> th</sup>* roots of unity.
+We need to find out the number of modular *e-1<sup> th</sup>* roots of unity.  
 if *n* is prime, the number of solutions *(x)* :
 <img src="https://latex.codecogs.com/svg.latex?|\%20x:x^{e-1}\equiv%201\pmod{n}\%20|=\langle%20e-1\rangle\subset\mathbb{Z}_n=gcd(e-1,n-1)" />
 
@@ -54,8 +53,7 @@ I wrote a Python software that filters out all the odd <img src="https://latex.c
 A second optimization would be to use the empirical fact that :
 <img src="https://latex.codecogs.com/svg.latex?gcd(e-1,p-1)=2\land%20gcd(e-1,q-1)=2%20\implies%20gcd(e,\varphi(n))=1" />
 
-So this is not necessary to check <img src="https://latex.codecogs.com/svg.latex?gcd(e,\varphi(n))=1" /> after <img src="https://latex.codecogs.com/svg.latex?gcd(e-1,p-1)=2\land%20gcd(e-1,q-1)=2" />. As this is not obvious to theoretically proof this, I let this check in the code.
-
+So this is not necessary to check <img src="https://latex.codecogs.com/svg.latex?gcd(e,\varphi(n))=1" /> after <img src="https://latex.codecogs.com/svg.latex?gcd(e-1,p-1)=2\land%20gcd(e-1,q-1)=2" />. As this is not obvious to theoretically proof this, I let this check in the code.  
 The actual python code CTF1 takes about 8 seconds on a standard PC.
 
 
@@ -68,7 +66,7 @@ This challenge shows that to just getting the number of roots of a composite num
 
 ## CTF 2 : Access control
 
-The CTF2 is about running a full statically linked binary in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.
+The CTF2 is about running a full statically linked binary in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.  
 I tried the padding oracle technique up to 2 chars on it. Many timing measurements, nothing was conclusive. As I'm not familiar with this kind of VM attack, I gave up on this challenge.
 
 
@@ -76,17 +74,16 @@ I tried the padding oracle technique up to 2 chars on it. Many timing measuremen
 
 By far, my favorite, I solved it in hours. On top of the cryptographic part, I enjoy the story of people building a new crypto-currency, supposedly better than Bitcoin, and turns out there are some flaws where you can compute very fast the private keys of the transactions. This is not fully fictional as [some real stories are very similar](http://blog.lekkertech.net/blog/2018/03/07/iota-signatures/). And I wouldn't talk this time about bugs in Solidity smart contracts.
 
-When using the Digital Signature (DSA) standard (NIST FIPS PUB 186), there is an ephemeral secret key during the signature, and it needs to be secret. If an attacker knows this number *k* or can guess it from a bad random source, he can compute your private key. 
+When using the Digital Signature (DSA) standard (NIST FIPS PUB 186), there is an ephemeral secret key during the signature, and it needs to be secret. If an attacker knows this number *k* or can guess it from a bad random source, he can compute your private key.  
 To begin, I started to seek for *k* corresponding to a fixed minute time in February/March 2018. This doesn't give anything conclusive.
 
-Also if an attacker can draw a relation between 2 *k* used, the most obvious and simple is equality, he can compute your private key (*d*). From 2 signatures, with an identical *k*, <img src="https://latex.codecogs.com/svg.latex?H(m_1)\mapsto(r_1,s_1),H(m_2)\mapsto(r_2,s_2)" /> :
+Also if an attacker can draw a relation between 2 *k* used, the most obvious and simple is equality, he can compute your private key (*d*). From 2 signatures, with an identical *k*, <img src="https://latex.codecogs.com/svg.latex?H(m_1)\mapsto(r_1,s_1),H(m_2)\mapsto(r_2,s_2)" /> :  
 <img src="https://latex.codecogs.com/svg.latex?k={\frac{H(m_2)-H(m_1)}{s_2-s_1}},s_1=\frac{H(m_1)+r_1.d}{k}\rightarrow\displaystyle%20d={\frac{s_1.k-H(m_1)}{r}}" />
 
 That's what happened with the Sony PS3 for example. Sony engineers used the same *k* every time to sign code. In 2010, some [hackers extracted a private key](https://youtu.be/Eag0VyRTld8?t=500) from the PS3 platform. The [RFC6979 standard](https://tools.ietf.org/html/rfc6979) was designed some years ago to overcome these issues. It recommends to sign with a deterministic *k* computed from the private key and the message. This standard is mostly used today, as there is no more need to have a random source to sign and this protects from *k* reuse.
 
 Finally, I seek for identical *k*. This was the right path, as 2 signatures have identical *k*.
-A signature is *(r,s)* and <img src="https://latex.codecogs.com/svg.latex?r=(k.G)_x" /> . So 2 identical *k* lead to 2 identical *r*. The 2 signatures which have the same *k*, have an identical starting in base64. 
-Having the 2 signatures with the same *r*, I computed *k*, then *d<sub>Bob</sub>*
+A signature is *(r,s)* and <img src="https://latex.codecogs.com/svg.latex?r=(k.G)_x" /> . So 2 identical *k* lead to 2 identical *r*. The 2 signatures which have the same *k*, have an identical starting in base64. Having the 2 signatures with the same *r*, I computed *k*, then *d<sub>Bob</sub>*.
 
 I used [my old 4 years old bitcoin and ECDSA library](https://github.com/antonio-fr/Fast_Sign_Verify), with some added code to get key recovery. The CTF3 file provided does all the work (takes ~0.5s on a standard PC) :
  - read the text file provided by Ledger
@@ -95,11 +92,10 @@ I used [my old 4 years old bitcoin and ECDSA library](https://github.com/antonio
  - extract *k* and then *d<sub>Bob</sub>*
  - sign the given message
 
-The extraction gives k =  1486220568. That means, according to the system description, that Bob signed his transaction on Saturday February 4th 2017 at 15h02:48 GMT. Probably, he signed 2 transactions in the same second, making 2 transactions with same *k*. That's the flaw in the "\$camcoin" system imagined by Ledger team. DSA shall always use a random *k* or a RFC6979 deterministic one. For example, using this "\$camcoin", if one broadcasts the transaction just after signing (a standard crypto-currency use), it is really easy to find out the value of *k* used and then get the private key.
+The extraction gives k = 1486220568. That means, according to the system description, that Bob signed his transaction on Saturday February 4th 2017 at 15h02:48 GMT. Probably, he signed 2 transactions in the same second, making 2 transactions with same *k*. That's the flaw in the "\$camcoin" system imagined by Ledger team. DSA shall always use a random *k* or a RFC6979 deterministic one. For example, using this "\$camcoin", if one broadcasts the transaction just after signing (a standard crypto-currency use), it is really easy to find out the value of *k* used and then get the private key.
 
-Here from *k* used twice, we get the Bob's secret key :
-<img src="https://latex.codecogs.com/svg.latex?d_{Bob}\%20_{(b10)}=\textnormal{36221617151509169543226411876758718954222210470729632659581052280059046489003}" />
-
+Here from *k* used twice, we get the Bob's secret key :  
+<img src="https://latex.codecogs.com/svg.latex?d_{Bob}\%20_{(b10)}=\textnormal{36221617151509169543226411876758718954222210470729632659581052280059046489003}" />  
 <img src="https://latex.codecogs.com/svg.latex?d_{Bob}\%20_{(b16)}=\textnormal{5014b573432161171a4c8312f67abe5cfe79d83382c1fea1dfb2c9c268216bab}" />
 
 
@@ -108,10 +104,8 @@ Then signing the following message (*m*) with *d<sub>Bob</sub>* and *k* = 152154
 Amount:1000000 From:1Kx74VzYPdnJ9xxYQRAap4oNsqaAdUdNCA To:14pHuKrkRhLKsW6zxHKQ64DFGyKQffj7GW
 ```
 
-<img src="https://latex.codecogs.com/svg.latex?H(m)=\rm{SHA256}(\rm{SHA256}(m))" />
-
-<img src="https://latex.codecogs.com/svg.latex?H(m)_{(b10)}=\textnormal{99418066424312055700057700639792607513261906432102262516632065974921000930487}" />
-
+<img src="https://latex.codecogs.com/svg.latex?H(m)=\rm{SHA256}(\rm{SHA256}(m))" />  
+<img src="https://latex.codecogs.com/svg.latex?H(m)_{(b10)}=\textnormal{99418066424312055700057700639792607513261906432102262516632065974921000930487}" />  
 <img src="https://latex.codecogs.com/svg.latex?H(m)_{(b16)}=\textnormal{dbcca1aab480b507200cf72414b6f01c6dda6ed701bcf6b75f53502881b84cb7}" />
 
 
