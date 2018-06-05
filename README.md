@@ -25,7 +25,7 @@ As a warm-up, we can see if there exists and to find *e* where for **any** <img 
 <img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=k.\lambda(n)+1,k\in\mathbb{N}" />
 
 <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=\operatorname{lcm}{\big(}\lambda(p_{1}^{r_{1}}),\,\lambda(p_{2}^{r_{2}}),\,\ldots,\,\lambda(p_{k}^{r_{k}}){\big)}" />  
-<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" />is the Carmichael function.
+<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" />  is the Carmichael function.
 
 
 
