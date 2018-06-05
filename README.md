@@ -13,7 +13,7 @@ The numbers given are :
 p = nextprime(1337) and q = nextprime(6982)  
 So we have : p = 1361 and q = 6983  
 n = p * q = 9503863  
-<img src="https://latex.codecogs.com/svg.latex?\varphi(n)=n\prod_{p\mid n}\left(1-{\frac{1}{p}}\right)" />  
+<img src="https://latex.codecogs.com/svg.latex?\varphi(n)=n\prod_{p\mid%20n}\left(1-{\frac{1}{p}}\right)" />  
 <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)=9495520" />
 
 
@@ -24,8 +24,9 @@ As a warm-up, we can see if there exists and to find *e* where for **any** <img 
 
 <img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=k.\lambda(n)+1,k\in\mathbb{N}" />
 
-<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=\operatorname{lcm}{\big(}\lambda(p_{1}^{r_{1}}),\,\lambda(p_{2}^{r_{2}}),\,\ldots,\,\lambda(p_{k}^{r_{k}}){\big)}" />
-<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" /> is the Carmichael function.
+<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=\operatorname{lcm}{\big(}\lambda(p_{1}^{r_{1}}),\,\lambda(p_{2}^{r_{2}}),\,\ldots,\,\lambda(p_{k}^{r_{k}}){\big)}" />  
+<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" />is the Carmichael function.
+
 
 
 *e* is less than <img src="https://latex.codecogs.com/svg.latex?\varphi(n)" /> and prime with it. With n = 1361*6983 = 9503863, there is one unique *e* value that matches : e = 4747761.
@@ -37,8 +38,8 @@ We are now seeking for the number of solutions of :
 <img src="https://latex.codecogs.com/svg.latex?E(x):x^e\equiv%20x\pmod{n}" />
 
 Let's begin with p prime :
-<img src="https://latex.codecogs.com/svg.latex?E(x):x^e\equiv%20x\pmod{n}" />
-<img src="https://latex.codecogs.com/svg.latex?x^e\equiv%20x\pmod{p}\iff%20x^e-x\equiv0\pmod{p}\iff%20x(x^{e-1}-1)\equiv0\pmod{p}" />
+<img src="https://latex.codecogs.com/svg.latex?E(x):x^e\equiv%20x\pmod{p}" />
+<img src="https://latex.codecogs.com/svg.latex?x^e\equiv%20x\pmod{p}\iff%20x^e-x\equiv0\pmod{p}\iff%20x(x^{e-1}-1)\equiv0\pmod{p}" />  
 <img src="https://latex.codecogs.com/svg.latex?\iff%20x^{e-1}\equiv1\vee%20x\equiv0\pmod{p}" /> (whether p is factor of x)
 
 We need to find out the number of modular *e-1<sup> th</sup>* roots of unity.  
@@ -68,7 +69,7 @@ The final result is <img src="https://latex.codecogs.com/svg.latex?\prod%20e_i\m
 
 This challenge shows that to just getting the number of roots of a composite number, depends on its factors. Here, this is <img src="https://latex.codecogs.com/svg.latex?\prod(1+gcd(X,p_i-1))" />, requiring the factors *p<sub>i</sub>* of *n*.
 
-A more detailed proof of the formula is given in §3 (Theorem 3) in :
+A more detailed proof of the formula is given in §3 (Theorem 3) in :  
 G.R. Blakley, I. Borosh  
 *RSA public key cryptosystems do not always conceal messages*  
 Computers & Mathematics with Applications, Issue 5 (1979), p.169-178 [LINK](https://www.sciencedirect.com/science/article/pii/0898122179900397)
@@ -76,7 +77,7 @@ Computers & Mathematics with Applications, Issue 5 (1979), p.169-178 [LINK](http
 
 ## CTF 2 : Access control
 
-The CTF2 is about running a full statically linked binary, doing a full decompilation to reverser engineering and extract private keys. Alternatively, runs in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.  
+The CTF2 is about running a full statically linked binary, doing a full decompilation to reverse engineering and extract the private key. Alternatively, runs in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.  
 I tried the padding oracle technique up to 2 chars on it. Many timing measurements, nothing was conclusive. As I'm not familiar with this kind of analysis, I gave up on this challenge.
 
 
