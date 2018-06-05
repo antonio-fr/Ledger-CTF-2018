@@ -25,11 +25,10 @@ As a warm-up, we can see if there exists and to find *e* where for **any** <img 
 <img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=k.\lambda(n)+1,k\in\mathbb{N}" />
 
 <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=\operatorname{lcm}{\big(}\lambda(p_{1}^{r_{1}}),\,\lambda(p_{2}^{r_{2}}),\,\ldots,\,\lambda(p_{k}^{r_{k}}){\big)}" />  
-<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" />  is the Carmichael function.
+<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" />  
+is the Carmichael function.
 
-
-
-*e* is less than <img src="https://latex.codecogs.com/svg.latex?\varphi(n)" /> and prime with it. With n = 1361*6983 = 9503863, there is one unique *e* value that matches : e = 4747761.
+The *e* number is always less than <img src="https://latex.codecogs.com/svg.latex?\varphi(n)" /> and prime with it. With n = 1361*6983 = 9503863, there is one unique *e* value that matches : e = 4747761.
 So taking <img src="https://latex.codecogs.com/svg.latex?\lambda(n)+1" />, you get *E(x)=x* for any message. So there's a chance we can pick up an unfortunate number which make null-encryption when using it? Well, this is a common mistake in the Ledger RSA introduction. There's this kind of error even in [the original RSA paper](https://people.csail.mit.edu/rivest/Rsapaper.pdf), <img src="https://latex.codecogs.com/svg.latex?gcd(e,\varphi)" /> is not enough. *e* needs to be less than <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" /> , instead of <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)"/>. So this avoids having *e* nulling the encryption. In practice, *e* is virtually always the largest known Fermat prime <img src="https://latex.codecogs.com/svg.latex?2^{2^4}+1=65537" />. This value is a recommended value in many standards (e.g. [DKIM RFC4871](https://www.ietf.org/rfc/rfc4871.txt): "*SHOULD use a public exponent of 65537*"). The primality of *e* makes <img src="https://latex.codecogs.com/svg.latex?\gcd(p-1,e)=1\implies%20p\not\equiv%201\pmod%20e" /> and its form makes computation (encryption) very fast. Using a fixed *e*, the key generation is just finding 2 primes *p* and *q*, then computing the modular inverse <img src="https://latex.codecogs.com/svg.latex?d=e^{-1}\bmod\lambda(n)" />. In the RSA system, the public numbers are *(n,e)*, and the secrets are *(d, p, q)*. Note that *&lambda;(n)* and *&phi;(n)* are secrets, as they need *p* and *q* for their computation, to actually compute them from *n* requires to factor *n*. The point is that *p* and *q* can be computed easily from *&lambda;(n)* and *&phi;(n)*. 
 
 Yet, the challenge is the opposite, we need to get all values of *e* where there is a minimal number of messages where *E(x)=x*.
