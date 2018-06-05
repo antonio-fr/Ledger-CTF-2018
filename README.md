@@ -130,6 +130,8 @@ HKaLZ/jSgiehh7cyhP5A7AXfEEwuQudjJiJqQLn2qa6RSzWQeeCrbVIdw0vMpnYHqfUN9CQDI2LKlmHx
 
 The Ledger challenge was covering many areas in computer science security and cryptography. I really enjoyed working on it. I loved this mix of theory, practice and imagination. It was all about finding what could be the issue in the system to break in, making some theories in order to build a small program to give a solution in seconds.
 
+Ledger did a quick answers explanation afterwards [here](https://www.ledger.fr/2018/06/01/ctf-complete-hw-bounty-still-ongoing-2-337-btc/), and uploaded some software of the contestants on [Github](https://github.com/LedgerHQ/CTF/tree/master/ctf2018)
+
 The first challenge, is fully theoretical, so I imagine there are many ways to reach the solution. I hope I didn't write so much errors in the theory, I don't feel at home in parts like that.  
 Sadly, I couldn't make the hardest one, CTF#2. Still, with this one I learned the most because I didn't know many things about it and I did make a lot of researches. I'll also learn even more with the answers detailed of this challenge, from others and from Ledger.  
 CTF#3 was really my cup of tea, I could even reused some of my old codes about ECDSA and Bitcoin signatures to help the computation.  
