@@ -13,37 +13,43 @@ The numbers given are :
 p = nextprime(1337) and q = nextprime(6982)  
 So we have : p = 1361 and q = 6983  
 n = p * q = 9503863  
+<img src="https://latex.codecogs.com/svg.latex?\varphi(n)=n\prod_{p\mid n}\left(1-{\frac{1}{p}}\right)" />  
 <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)=9495520" />
 
 
 In one given example, p=13, q=37, e = 73, it turns that all the messages *x* are such that <img src="https://latex.codecogs.com/svg.latex?E(x)=x" />. There is no encryption actually with this value, because it outputs the original value for any message.
 
 As a warm-up, we can see if there exists and to find *e* where for **any** <img src="https://latex.codecogs.com/svg.latex?x\in\mathbb{Z}_n" />, we got *E(x)=x* ? We are seeking for *e* such that :
-<img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=1\bmod{\lambda(n)}" /> (using Euler and Fermat theorems)
+<img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=1\bmod{\lambda(n)}" /> (using a corollary of Euler theorem and multiplicative order)
 
 <img src="https://latex.codecogs.com/svg.latex?\forall%20x\in\mathbb{Z}_n,x^e\bmod%20n=x\iff%20e=k.\lambda(n)+1,k\in\mathbb{N}" />
 
+<img src="https://latex.codecogs.com/svg.latex?\lambda(n)=\operatorname{lcm}{\big(}\lambda(p_{1}^{r_{1}}),\,\lambda(p_{2}^{r_{2}}),\,\ldots,\,\lambda(p_{k}^{r_{k}}){\big)}" />
 <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" /> is the Carmichael function.
 
 
 *e* is less than <img src="https://latex.codecogs.com/svg.latex?\varphi(n)" /> and prime with it. With n = 1361*6983 = 9503863, there is one unique *e* value that matches : e = 4747761.
-So taking <img src="https://latex.codecogs.com/svg.latex?\lambda(n)+1" />, you get *E(x)=x* for any message. So there's a chance we can pick up an unfortunate number which make null-encryption when using it? Well, this is a common mistake in the Ledger RSA introduction. There's this kind of error even in [the original RSA paper](https://people.csail.mit.edu/rivest/Rsapaper.pdf), <img src="https://latex.codecogs.com/svg.latex?gcd(e,\varphi)" /> is not enough. *e* needs to be less than <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" /> , instead of <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)"/>. So this avoids having *e* nulling the encryption. In practice, *e* is virtually always the largest known Fermat prime <img src="https://latex.codecogs.com/svg.latex?2^{2^4}+1=65537" />. This value is a recommended value in many standards (e.g. [DKIM RFC4871](https://www.ietf.org/rfc/rfc4871.txt): "*SHOULD use a public exponent of 65537*"). The primality of *e* makes <img src="https://latex.codecogs.com/svg.latex?\gcd(p-1,e)=1\implies%20p\not\equiv%201\pmod%20e" /> and its form makes computation (encryption) very fast. Using a fixed *e*, the key generation is just finding 2 primes *p* and *q*, then computing the modular inverse <img src="https://latex.codecogs.com/svg.latex?d=e^{-1}\bmod\lambda(n)" />. In the RSA system, the public numbers are *(n,e)*, and the secrets are *(d, p, q)*. Note that *&lambda;(n)* and *&phi;(n)* are secrets, as they need *p* and *q* for their computation, to actually compute them from *n* requires to factor *n*. 
+So taking <img src="https://latex.codecogs.com/svg.latex?\lambda(n)+1" />, you get *E(x)=x* for any message. So there's a chance we can pick up an unfortunate number which make null-encryption when using it? Well, this is a common mistake in the Ledger RSA introduction. There's this kind of error even in [the original RSA paper](https://people.csail.mit.edu/rivest/Rsapaper.pdf), <img src="https://latex.codecogs.com/svg.latex?gcd(e,\varphi)" /> is not enough. *e* needs to be less than <img src="https://latex.codecogs.com/svg.latex?\lambda(n)=lcm(p-1,q-1)" /> , instead of <img src="https://latex.codecogs.com/svg.latex?\varphi(n)=(p-1)*(q-1)"/>. So this avoids having *e* nulling the encryption. In practice, *e* is virtually always the largest known Fermat prime <img src="https://latex.codecogs.com/svg.latex?2^{2^4}+1=65537" />. This value is a recommended value in many standards (e.g. [DKIM RFC4871](https://www.ietf.org/rfc/rfc4871.txt): "*SHOULD use a public exponent of 65537*"). The primality of *e* makes <img src="https://latex.codecogs.com/svg.latex?\gcd(p-1,e)=1\implies%20p\not\equiv%201\pmod%20e" /> and its form makes computation (encryption) very fast. Using a fixed *e*, the key generation is just finding 2 primes *p* and *q*, then computing the modular inverse <img src="https://latex.codecogs.com/svg.latex?d=e^{-1}\bmod\lambda(n)" />. In the RSA system, the public numbers are *(n,e)*, and the secrets are *(d, p, q)*. Note that *&lambda;(n)* and *&phi;(n)* are secrets, as they need *p* and *q* for their computation, to actually compute them from *n* requires to factor *n*. The point is that *p* and *q* can be computed easily from *&lambda;(n)* and *&phi;(n)*. 
 
 Yet, the challenge is the opposite, we need to get all values of *e* where there is a minimal number of messages where *E(x)=x*.
 We are now seeking for the number of solutions of :
 
 <img src="https://latex.codecogs.com/svg.latex?E(x):x^e\equiv%20x\pmod{n}" />
 
-<img src="https://latex.codecogs.com/svg.latex?\iff%20x^{e-1}\equiv%201\pmod{n}" />
+Let's begin with p prime :
+<img src="https://latex.codecogs.com/svg.latex?E(x):x^e\equiv%20x\pmod{n}" />
+<img src="https://latex.codecogs.com/svg.latex?x^e\equiv%20x\pmod{p}\iff%20x^e-x\equiv0\pmod{p}\iff%20x(x^{e-1}-1)\equiv0\pmod{p}" />
+<img src="https://latex.codecogs.com/svg.latex?\iff%20x^{e-1}\equiv1\vee%20x\equiv0\pmod{p}" /> (whether p is factor of x)
 
 We need to find out the number of modular *e-1<sup> th</sup>* roots of unity.  
-if *n* is prime, the number of solutions *(x)* :  
-<img src="https://latex.codecogs.com/svg.latex?|\%20x:x^{e-1}\equiv%201\pmod{n}\%20|=\langle%20e-1\rangle\subset\mathbb{Z}_n=gcd(e-1,n-1)" />
+The number of solutions *(x)* is :  
+<img src="https://latex.codecogs.com/svg.latex?|\%20x:x^{e-1}\equiv1\pmod{p}\%20|=\langle%20e-1\rangle\subset\mathbb{Z}_p" />  
+<img src="https://latex.codecogs.com/svg.latex?=gcd(e-1,\varphi(p))=gcd(e-1,p-1)" />
 
+Adding 1 solution for the "x=0", then computing the exact same for *q*, using the Chinese remainder theorem, we finally get :  
+<img src="https://latex.codecogs.com/svg.latex?|\%20x:x^{e}\equiv%20x\pmod{n}\%20|=(1+gcd(e-1,p-1))\times(1+gcd(e-1,q-1))" />
 
-In the challenge, *n* is not prime, it is the product of 2 primes *p* and *q*.
-So I approximate the number of solutions of E(x) using : <img src="https://latex.codecogs.com/svg.latex?gcd(e-1,p-1)*gcd(e-1,q-1)" />. The exact formula is a complex and recursive formula, here we don't need the exact number of roots, a good approximation is sufficient to know when it is minimum.
-As *p-1* or *q-1* are even, the minimum expected is 2 for each *gcd*. Minimal values (=2) are expected when *e* is odd.
+As *p-1* or *q-1* are even, the minimum expected is 2 for each *gcd*. Minimal values (=2) are expected when *e* is odd. To get the maximum speed, testing *gcd(e-1,p<sub>i</sub>-1)==2* is thus sufficient.
 
 
 I wrote a Python software that filters out all the odd <img src="https://latex.codecogs.com/svg.latex?e\in%202\le%20e%3C\varphi(n)" /> which complies :
@@ -60,8 +66,12 @@ The actual python code CTF1 takes about 8 seconds on a standard PC.
 The final result is <img src="https://latex.codecogs.com/svg.latex?\prod%20e_i\mod{1337694213377816}=501635330016681" />
 
 
-This challenge shows that to just getting the number of roots of a composite number, depends on its factors. Here, this involves something like <img src="https://latex.codecogs.com/svg.latex?\prod%20gcd(X,p_i)" />, requiring the factors *p<sub>i</sub>* of *n*.
+This challenge shows that to just getting the number of roots of a composite number, depends on its factors. Here, this is <img src="https://latex.codecogs.com/svg.latex?\prod(1+gcd(X,p_i-1))" />, requiring the factors *p<sub>i</sub>* of *n*.
 
+A more detailed proof of the formula is given in §3 (Theorem 3) in :
+G.R. Blakley, I. Borosh  
+*RSA public key cryptosystems do not always conceal messages*  
+Computers & Mathematics with Applications, Issue 5 (1979), p.169-178 [LINK](https://www.sciencedirect.com/science/article/pii/0898122179900397)
 
 
 ## CTF 2 : Access control
