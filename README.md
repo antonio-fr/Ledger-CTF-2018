@@ -76,8 +76,8 @@ Computers & Mathematics with Applications, Issue 5 (1979), p.169-178 [LINK](http
 
 ## CTF 2 : Access control
 
-The CTF2 is about running a full statically linked binary in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.  
-I tried the padding oracle technique up to 2 chars on it. Many timing measurements, nothing was conclusive. As I'm not familiar with this kind of VM attack, I gave up on this challenge.
+The CTF2 is about running a full statically linked binary, doing a full decompilation to reverser engineering and extract private keys. Alternatively, runs in a VM, injecting faults and reading memory. It is also the harder of the 3 challenges. To compare, only half of the people who solve CTF#1, solved this challenge.  
+I tried the padding oracle technique up to 2 chars on it. Many timing measurements, nothing was conclusive. As I'm not familiar with this kind of analysis, I gave up on this challenge.
 
 
 ## CTF 3 : \$camcoin is the new Bitcoin
